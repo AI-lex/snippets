@@ -1,0 +1,55 @@
+---
+title: "reddit_analyses"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+#Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+```
+
+## Load data
+
+```{r}
+
+reddit = read.csv("data/reddit.csv", colClasses = c("gender" = "factor"))
+#View(reddit)
+```
+
+## Inspect data
+
+```{r}
+
+summary(reddit)
+str(reddit)
+
+
+```
+
+## table of employer.status and gender type
+
+```{r}
+n_of_female <- dim(subset(reddit, gender == "1", gender))[1]
+n_of_male <- dim(subset(reddit, gender == "0", gender))[1]
+round(table(reddit$gender, reddit$employment.status) / c(n_of_male,n_of_female), 2)
+```
+```{r}
+levels(reddit$age.range)
+
+reddit$age.range <- factor(reddit$age.range, levels=c("Under 18", "18-24", "25-34" , "35-44", "45-54", "65 or Above"), ordered=TRUE)
+levels(reddit$age.range)
+```
+
+
+## Plots
+
+
+```{r}
+#install.packages('ggplot2', dependencies = TRUE)
+library(ggplot2)
+
+qplot(data = reddit, x=age.range)
+```
+
+

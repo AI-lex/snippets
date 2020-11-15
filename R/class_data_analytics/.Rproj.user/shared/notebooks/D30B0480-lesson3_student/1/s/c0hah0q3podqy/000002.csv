@@ -1,0 +1,4 @@
+"0","qplot(x = friend_count, data = na.omit(fb_data), binwidth = 25) +"
+"0","  scale_x_continuous(limits = c(0, 1000),"
+"0","                     breaks = seq(0, 1000, 50)) + "
+"0","  facet_wrap(~gender)"

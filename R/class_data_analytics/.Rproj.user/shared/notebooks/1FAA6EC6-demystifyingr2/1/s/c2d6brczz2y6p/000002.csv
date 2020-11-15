@@ -1,0 +1,1 @@
+"0","efficient <- subset(mtcars, mpg >= 23)"

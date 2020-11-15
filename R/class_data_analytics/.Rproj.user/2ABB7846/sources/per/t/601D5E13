@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1596458276966.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1015576709",
+    "id" : "601D5E13",
+    "lastKnownWriteTime" : 1596466692,
+    "last_content_update" : 1596466692891,
+    "path" : "~/R_projects/class_data_analytics/week3/lesson3_student.rmd",
+    "project_path" : "week3/lesson3_student.rmd",
+    "properties" : {
+        "cursorPosition" : "240,6",
+        "scrollLine" : "233"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

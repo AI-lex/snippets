@@ -1,0 +1,2 @@
+"0","reddit = read.csv(""data/reddit.csv"", colClasses = c(""gender"" = ""factor""))"
+"0","View(reddit)"

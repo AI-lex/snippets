@@ -1,0 +1,1 @@
+"0","#qplot(data=fb_data, x= friend_count, xlim=c(0,1000), binwidth = 40)"

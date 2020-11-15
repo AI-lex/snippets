@@ -1,0 +1,1 @@
+"0","qplot(data = fb_data, x = tenure, binwidth = 30, color = I('black'), fill = I('#099DD9'))"

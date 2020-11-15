@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1596458704305.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3806660542",
+    "id" : "65930E25",
+    "lastKnownWriteTime" : 1596457970,
+    "last_content_update" : 1596457970,
+    "path" : "~/R_projects/class_data_analytics/week2/reddit_analyses.Rmd",
+    "project_path" : "week2/reddit_analyses.Rmd",
+    "properties" : {
+        "cursorPosition" : "6,0",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

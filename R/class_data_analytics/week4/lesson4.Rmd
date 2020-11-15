@@ -1,0 +1,250 @@
+---
+title: "lesson4"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Load and inspect data  
+
+
+```{r diamonds}
+
+library(ggplot2) #must load the ggplot package first
+data(diamonds) #loads the diamonds data set since it comes with the ggplot package
+
+summary(diamonds)
+str(diamonds)
+summary(diamonds$color)
+?diamonds
+
+
+```
+
+## Quiz1
+
+How many observations? 
+A: 53940
+
+How many vars? 
+A: 10
+
+How many ordered factors? 
+A: 3
+
+Which is the "best" factor of diamond color? 
+A: J
+
+
+## Quiz2
+
+Plot price distribution. Is it long tail data? 
+A: Yes
+```{r plot hist of price}
+
+qplot(data = diamonds, x=price, bins=50) 
+```
+
+## Quiz3
+
+Describe the distribution: center, mean, std,...
+
+
+```{r}
+summary(diamonds$price)
+
+```
+
+## Quiz4
+
+How many diamonds costs...
+
+less than 500?
+less than 250?
+more than 15000?
+A: 
+
+```{r}
+price_under_250 = subset(diamonds, price<250) 
+price_under_500 = subset(diamonds, price<500)
+price_equalover_15000 = subset(diamonds, price>=15000)
+
+dim(price_under_250)
+dim(price_under_500)
+dim(price_equalover_15000)
+
+```
+
+## Quiz5
+
+Look at the largest peak of price
+There are no diamonds that cost $1500.
+
+For diamonds that cost less than 2,000, the most common price of a diamond is around 700 with the mode being $605
+
+```{r}
+qplot(data = diamonds, x = price, binwidth = 30, color = I('black'), fill = I('#099DD9'))+
+  scale_x_continuous(limits = c(min(diamonds$price),2000), breaks= seq(0, max(diamonds$price), 1000))+
+  xlab('Age of user') +
+  ylab('Number of diamonds in sample')
+qplot(data = diamonds, x = sqrt(price), binwidth = 1, color = I('black'), fill = I('#099DD9'))+
+  scale_x_continuous() +
+  xlab('sqrt price of diamonds') +
+  ylab('Number of diamonds in sample')
+
+```
+
+## Quiz6
+
+Break out the histogram of diamond prices by cut ($cut).
+You should have five histograms in separate
+panels on your resulting plot.
+
+
+```{r}
+qplot(data = diamonds, x=price) +
+  xlab('price') +
+  ylab('occurrance')+
+  facet_wrap(~cut)
+```
+
+
+## Quiz7
+
+Which cut has the highest priced diamonds?
+Which cut has the lowest priced diamonds?
+Which cut has the lowest median diamonds?
+
+```{r}
+by(diamonds$price, diamonds$cut, summary)
+```
+
+
+This means the distributions should be somewhat similar,
+but the histograms we created don't show that.
+
+The 'Fair' and 'Good' diamonds appear to have 
+different distributions compared to the better
+cut diamonds. They seem somewhat uniform
+on the left with long tails on the right.
+
+Let's look in to this more.
+
+
+## Quiz8
+
+
+```{r}
+qplot(data = diamonds, x=price) +
+  xlab('price') +
+  ylab('occurrance')+
+  facet_wrap(~cut, scales="free")
+```
+
+# Quiz9
+Create a histogram of price per carat
+and facet it by cut. You can make adjustments
+to the code from the previous exercise to get
+started.
+
+Adjust the bin width and transform the scale
+of the x-axis using log10.
+
+```{r}
+qplot(data = diamonds, x=price, binwidth=0.05) +
+  scale_x_log10() +
+  xlab('log10 price') +
+  ylab('occurrance')+
+  facet_wrap(~cut, scales="free")
+```
+Did you find normal-ish distributions and a slightly bimodal distribution for Very Good cuts? (If the Very Good facet looks smooth, try decreasing your bin width! If the data looks skewed, did you remember to perform a log10 transform?)
+
+#Quiz10
+
+Investigate the price of diamonds using box plots,
+numerical summaries, and one of the following categorical
+variables: cut, clarity, or color.
+```{r}
+qplot(data = diamonds, y=price, geom="boxplot")
+qplot(data = diamonds, y=price, x=cut, geom="boxplot")
+qplot(data = diamonds, y=price, x=clarity, geom="boxplot")
+qplot(data = diamonds, y=price, x=color, geom="boxplot")
+
+```
+```{r}
+qplot(data = diamonds, x=cut)
+qplot(data = diamonds, x=clarity)
+qplot(data = diamonds, x=color)
+```
+
+#Quiz 11
+
+What is the price range for the middle 50% of diamonds with color D AND J??
+What is the IQR of diamonds with color D AND J??
+```{r}
+quantile(subset(diamonds, color=="D")$price)
+quantile(subset(diamonds, color=="J")$price)
+
+IQR(subset(diamonds, color=="D")$price)
+IQR(subset(diamonds, color=="J")$price)
+```
+
+#Quiz12
+
+Investigate the price per carat of diamonds across
+the different colors of diamonds using boxplots.
+```{r}
+diamonds$price_per_carat <- diamonds$price / diamonds$carat
+
+qplot(data = diamonds, y=price_per_carat, x=color, geom="boxplot")
+
+```
+
+# Quiz13
+
+Investigate the weight of the diamonds in carat using a frquence polygon. use different bin widths to see how the frequency polygon changes. What carat size has a count greater than 2000?
+
+```{r}
+qplot(data = diamonds, x=carat, geom="freqpoly", binwidth=0.05)+
+  scale_x_continuous(breaks=seq(0,5,0.2))
+
+
+```
+```{r}
+table(diamonds$carat ==0.1)
+table(diamonds$carat ==0.3)
+table(diamonds$carat ==0.8)
+table(diamonds$carat ==1.01)
+table(diamonds$carat ==1.6)
+table(diamonds$carat ==2.0)
+table(diamonds$carat ==3.0)
+table(diamonds$carat ==5.0)
+
+```
+
+#Quiz 15
+
+dta manipulation with:
+
+tidyr: A package that reshapes the layout of tables.
+dplyr - a package that helps you transform tidy, tabular data
+```{r}
+#install.packages("tidyr", dependencies="T")
+#library(tidyr)
+#?gather
+#?spread
+
+#install.packages("dplyr", dependencies="T")
+library(dplyr)
+?select
+?filter
+?arrange
+?mutate
+?summarise
+?group_by
+
+
+```
+

@@ -1,0 +1,334 @@
+Lesson 3
+========================================================
+
+***
+
+### What to Do First?
+Notes:
+
+***
+
+### Pseudo-Facebook User Data
+Notes:
+
+```{r Pseudo-Facebook User Data}
+getwd()
+knitr::opts_chunk$set(echo = TRUE)
+fb_data <- read.csv("~/R_projects/class_data_analytics/data/pseudo_facebook.tsv", sep = "\t")
+
+```
+
+
+
+
+```{r}
+head(fb_data)
+```
+
+
+***
+
+### Histogram of Users' Birthdays
+Notes:
+
+```{r Histogram of Users\' Birthdays}
+#install.packages('ggplot2')
+library(ggplot2)
+
+qplot(data = fb_data, x=age)
+quantile(fb_data$age)
+
+qplot(data = fb_data, x=dob_day) +
+   scale_x_continuous(breaks=1:31)
+
+```
+
+***
+
+#### What are some things that you notice about this histogram?
+Response: dob on the 1th of a month is very frequent, also the 15th. the 31th seems under-representeted. interpretation: not every month has 31 days, so the under-represention of 31th is realistic. the 1th of a month is not very intuitiv - maybe false input for day of birth? same with 15th
+
+***
+
+### Moira's Investigation
+Notes: Moira investigation is about quantification of audience size. her findings is that most users underestimates their size of audience.  
+
+***
+
+### Estimating Your Audience Size
+Notes:
+
+***
+
+#### Think about a time when you posted a specific message or shared a photo on Facebook. What was it?
+Response:
+
+#### How many of your friends do you think saw that post?
+Response:
+
+#### Think about what percent of your friends on Facebook see any posts or comments that you make in a month. What percent do you think that is?
+Response:
+
+***
+
+### Perceived Audience Size
+Notes:
+
+***
+### Faceting
+Notes: 
+
+```{r Faceting}
+qplot(data = fb_data, x = dob_day) +
+  scale_x_continuous(breaks = 1:31) +
+  facet_wrap(~dob_month)
+```
+
+#### Let’s take another look at our plot. What stands out to you here?
+Response: the 01.01. is overrepresentated. it seems that my assumpation about fake dob input is more realistic, because its the default input of the dropdown menue
+
+***
+
+### Be Skeptical - Outliers and Anomalies
+Notes: 
+
+***
+
+### Moira's Outlier
+Notes:
+#### Which case do you think applies to Moira’s outlier?
+Response:
+
+***
+
+### Friend Count
+Notes:
+
+#### What code would you enter to create a histogram of friend counts?
+
+```{r Friend Count}
+qplot(data=fb_data, x= friend_count)
+```
+
+#### what is the plot looks like?
+Response: the variable distribution is squished into the lower section this distrubtion called "long tail" data
+
+***
+
+### Limiting the Axes
+Notes:
+
+```{r Limiting the Axes}
+
+qplot(data=fb_data, x= friend_count, binwidth = 40) +
+  scale_x_continuous(limits=c(1,1000))
+
+#qplot(data=fb_data, x= friend_count, xlim=c(0,1000), binwidth = 40)
+```
+
+### Exploring with Bin Width
+Notes:
+
+***
+
+### Adjusting the Bin Width
+Notes:
+
+### Faceting Friend Count
+```{r Faceting Friend Count}
+# What code would you add to create a facet the histogram by gender?
+# Add it to the code below.
+qplot(x = friend_count, data = fb_data, binwidth = 25) +
+  scale_x_continuous(limits = c(0, 1000),
+                     breaks = seq(0, 1000, 50)) + 
+  facet_wrap(~gender)
+```
+
+***
+
+### Omitting NA Values
+Notes:
+
+```{r Omitting NA Values}
+
+qplot(x = friend_count, data = na.omit(fb_data), binwidth = 25) +
+  scale_x_continuous(limits = c(0, 1000),
+                     breaks = seq(0, 1000, 50)) + 
+  facet_wrap(~gender)
+```
+
+***
+
+### Statistics 'by' Gender
+Notes:
+
+```{r Statistics \'by\' Gender}
+
+table(fb_data$gender)
+by(fb_data$friend_count, fb_data$gender, mean)
+by(fb_data$friend_count, fb_data$gender, summary)
+
+```
+
+#### Who on average has more friends: men or women?
+Response:
+mean female: 241.9699
+mean male:   165.0355
+
+#### What's the difference between the median friend count for women and men?
+Response:
+mean female: 96 
+mean male:   74 
+
+#### Why would the median be a better measure than the mean?
+Response: its robust against extreme values (outlier). median < mean is because of the long tail distribution
+
+***
+
+### Tenure
+Notes:
+
+```{r Tenure}
+qplot(data = fb_data, x = tenure, binwidth = 30, color = I('black'), fill = I('#099DD9'))
+```
+
+***
+
+#### How would you create a histogram of tenure by year?
+
+```{r Tenure Histogram by Year}
+qplot(data = fb_data, x = tenure/365, binwidth = 0.25, color = I('black'), fill = I('#099DD9'))+
+  scale_x_continuous(limits = c(0,7),  breaks = seq(1,7,1))
+```
+
+***
+
+### Labeling Plots
+Notes:
+
+```{r Labeling Plots}
+qplot(data = fb_data, x = tenure/365, binwidth = 0.25, color = I('black'), fill = I('#099DD9'))+
+  scale_x_continuous(limits = c(0,7),  breaks = seq(1,7,1))+
+  xlab('Number of years using Facebook') +
+  ylab('Number of users in sample')
+```
+
+***
+
+### User Ages
+Notes:
+
+```{r User Ages}
+qplot(data = fb_data, x = age, binwidth = 2, color = I('black'), fill = I('#099DD9'))+
+  scale_x_continuous(limits = c(min(fb_data$age),100), breaks= seq(10, 100, 5))+
+  xlab('Age of user') +
+  ylab('Number of users in sample')
+
+
+qplot(data = na.omit(fb_data), x = age, binwidth = 2, color = I('black'), fill = I('#099DD9'))+
+  scale_x_continuous(limits = c(min(fb_data$age),100), breaks= seq(10, 100, 5))+
+  xlab('Age of user') +
+  ylab('Number of users in sample') +
+  facet_wrap(~gender)
+```
+
+#### What do you notice?
+Response:
+
+***
+
+### The Spread of Memes
+Notes:
+
+***
+
+### Lada's Money Bag Meme
+Notes:
+
+***
+
+### Transforming Data
+Notes:
+
+***
+
+### Add a Scaling Layer
+Notes:
+
+```{r Add a Scaling Layer}
+
+```
+
+***
+
+
+### Frequency Polygons
+
+```{r Frequency Polygons}
+
+```
+
+***
+
+### Likes on the Web
+Notes:
+
+```{r Likes on the Web}
+
+```
+
+
+***
+
+### Box Plots
+Notes:
+
+```{r Box Plots}
+
+```
+
+#### Adjust the code to focus on users who have friend counts between 0 and 1000.
+
+```{r}
+
+```
+
+***
+
+### Box Plots, Quartiles, and Friendships
+Notes:
+
+```{r Box Plots, Quartiles, and Friendships}
+
+```
+
+#### On average, who initiated more friendships in our sample: men or women?
+Response:
+#### Write about some ways that you can verify your answer.
+Response:
+```{r Friend Requests by Gender}
+
+```
+
+Response:
+
+***
+
+### Getting Logical
+Notes:
+
+```{r Getting Logical}
+
+```
+
+Response:
+
+***
+
+### Analyzing One Variable
+Reflection:
+
+***
+
+Click **KnitHTML** to see all of your hard work and to have an html
+page of this lesson, your answers, and your notes!

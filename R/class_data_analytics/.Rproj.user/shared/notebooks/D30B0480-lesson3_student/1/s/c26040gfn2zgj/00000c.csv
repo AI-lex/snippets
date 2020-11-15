@@ -1,0 +1,2 @@
+"0","qplot(data=fb_data, x= friend_count, binwidth = 40) +"
+"0","  scale_x_continuous(limits=c(1,1000))"

@@ -1,0 +1,4 @@
+"0","qplot(data = fb_data, x = age, binwidth = 2, color = I('black'), fill = I('#099DD9'))+"
+"0","  scale_x_continuous(limits = c(min(fb_data$age),100), breaks= seq(10, 100, 5))+"
+"0","  xlab('Age of user') +"
+"0","  ylab('Number of users in sample')"

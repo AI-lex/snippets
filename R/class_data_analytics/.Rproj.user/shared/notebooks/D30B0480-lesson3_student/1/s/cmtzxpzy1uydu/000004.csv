@@ -1,0 +1,7 @@
+"0","getwd()"
+"1","[1]"
+"1"," ""/Users/ameinert/R_projects/class_data_analytics/week3"""
+"1","
+"
+"0","knitr::opts_chunk$set(echo = TRUE)"
+"0","fb_data <- read.csv(""~/R_projects/class_data_analytics/data/pseudo_facebook.tsv"", sep = ""\t"")"

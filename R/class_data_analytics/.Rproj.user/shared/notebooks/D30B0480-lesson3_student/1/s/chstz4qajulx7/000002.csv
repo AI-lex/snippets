@@ -1,0 +1,2 @@
+"0","qplot(data = fb_data, x = tenure/365, binwidth = 0.25, color = I('black'), fill = I('#099DD9'))+"
+"0","  scale_x_continuous(limits = c(0,7),  breaks = seq(1,7,1))"

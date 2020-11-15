@@ -1,0 +1,2 @@
+"0","#pipe operator alt + 7"
+"0","subset(mtcars, mpg >=30, mpg>=30 | hp<60)"
